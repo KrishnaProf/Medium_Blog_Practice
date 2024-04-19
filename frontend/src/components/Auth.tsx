@@ -19,7 +19,7 @@ export const Auth = ({ type }: { type: "signup | signin" }) => {
         </div>
         <labelledInput
           label="username"
-          placeholder="Krishna..."
+          placeholder="Krishna.."
           onChange={(e: { target: { value: any } }) => {
             setPostInputs({
               ...postInputs,
