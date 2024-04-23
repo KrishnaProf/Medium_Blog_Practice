@@ -15,58 +15,24 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
     <div className="h-screen flex justify-center flex-col">
       <div className="flex justify-center">
         <div>
-          <div className="px-10">
-            <div className="text-3xl font-extrabold ">Create an Account</div>
-            <div className="text-slate-400">
-              {type === "signin"
-                ? "Don't have an account?"
-                : "Already have an Account?"}
-              <Link
-                className="pl-2 underline"
-                to={type === "signin" ? "/signup" : "/signin"}
-              >
-                {type === "signin" ? "Sign Up" : "Sign In"}
-              </Link>
-            </div>
-          </div>
-          <div className="pt-8">
-            {type === "signup" ? (
-              <LabelledInput
-                label="Name"
-                placeholder="Krishna..."
-                onChange={(e: { target: { value: any } }) => {
-                  setPostInputs({
-                    ...postInputs,
-                    name: e.target.value,
-                  });
-                }}
-              />
-            ) : null}
-
-            <LabelledInput
-              label="Username"
-              placeholder="Krishna@gmail.com"
-              onChange={(e: { target: { value: any } }) => {
-                setPostInputs({
-                  ...postInputs,
-                  email: e.target.value,
-                });
-              }}
-            />
-
-            <LabelledInput
-              label="Password"
-              placeholder="12345678"
-              type={"password"}
-              onChange={(e: { target: { value: any } }) => {
-                setPostInputs({
-                  ...postInputs,
-                  password: e.target.value,
-                });
-              }}
-            />
+          <div className="text-3xl font-extrabold ">Create an Account</div>
+          <div className="text-slate-400">
+            Already have an Account?
+            <Link className="pl-2 underline" to={"/signin"}>
+              Login
+            </Link>
           </div>
         </div>
+        <labelledInput
+          label="username"
+          placeholder="Krishna..."
+          onChange={(e: { target: { value: any } }) => {
+            setPostInputs({
+              ...postInputs,
+              name: e.target.value,
+            });
+          }}
+        />
       </div>
     </div>
   );
