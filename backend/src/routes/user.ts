@@ -2,7 +2,7 @@ import { Hono } from 'hono'
 import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
 import { sign} from 'hono/jwt';
-import { signupInput } from '@leelakrishna/medium-common';
+import { signinInput, signupInput } from '@leelakrishna/medium-common';
 
   
 export const userRouter = new Hono<{
@@ -24,6 +24,12 @@ userRouter.post('/signup', async (c) => {
     }).$extends(withAccelerate());
 
     const body = await c.req.json();
+    const { success } = signupInput.safeParse(body);
+    if(!success){
+      c.status(411);
+      return c.json({message : "Inputs are not correct"})
+    }
+
   
     try {
       // Check if user already exists
@@ -61,6 +67,12 @@ userRouter.post('/signup', async (c) => {
     const prisma = new PrismaClient({
           datasourceUrl: c.env?.DATABASE_URL,
       }).$extends(withAccelerate());
+
+      const { success } = signinInput.safeParse(body);
+      if(!success){
+        c.status(411);
+        return c.json({message : "Inputs are not correct"})
+      }
   
     try {
     const user = await prisma.user.findFirst({
