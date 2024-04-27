@@ -1,8 +1,11 @@
+import { Link } from "react-router-dom";
+
 interface BlogcardProps {
   AuthorName: string;
   BlogTitle: string;
   BlogContent: string;
   PublishedDate: string;
+  id: number;
 }
 
 export const Blogcard = ({
@@ -10,38 +13,45 @@ export const Blogcard = ({
   BlogTitle,
   BlogContent,
   PublishedDate,
+  id,
 }: BlogcardProps) => {
   return (
-    <div className="p-4 border-b border-slate-200 pb-4">
-      <div className="flex">
-        <div className="flex justify-center flex-col">
-          <Avatar name={AuthorName} size="small" />
+    <Link to={`/blog/${id}`}>
+      <div className="p-4 border-b border-slate-200 pb-4 w-screen max-w-screen-md cursor-pointer">
+        <div className="flex">
+          <Avatar name={AuthorName} />
+          <div className="font-extralight pl-2 text-sm flex justify-center flex-col">
+            {AuthorName}
+          </div>
+          <div className="flex justify-center flex-col pl-2 flex justify-center flex-col">
+            <Circle />
+          </div>
+          <div className="pl-2 font-thin text-slate-500 text-sm flex justify-center flex-col">
+            {PublishedDate}
+          </div>
         </div>
-        <div className=" flex justify-center flex-col font-thin pl-2 pr-2 text-xs">
-          {AuthorName}
-        </div>{" "}
-        <div className="flex justify-center flex-col font-bold pb-2">.</div>{" "}
-        <div className=" flex justify-center flex-col font-thin pl-2 pr-2 text-xs">
-          {PublishedDate}
+        <div className="text-xl font-semibold pt-2">{BlogTitle}</div>
+        <div className="text-md font-thin">
+          {BlogContent.slice(0, 100) + "..."}
+        </div>
+        <div className="text-slate-500 text-sm font-thin pt-4">
+          {`${Math.ceil(BlogContent.length / 100)} minute(s) read`}
         </div>
       </div>
-      <div className="text-xl font-bold">{BlogTitle}</div>
-      <div className="text-md font-thin">
-        {BlogContent.slice(0, 100) + "..."}
-      </div>
-      <div className="text-slate-400 text-sm font-thin pt-4">{`${Math.ceil(
-        BlogContent.length / 100
-      )} minute(s) read`}</div>
-    </div>
+    </Link>
   );
 };
+
+export function Circle() {
+  return <div className="h-1 w-1 rounded-full bg-slate-500"></div>;
+}
 
 export function Avatar({
   name,
   size = "small",
 }: {
   name: string;
-  size: "small" | "big";
+  size?: "small" | "big";
 }) {
   return (
     <div

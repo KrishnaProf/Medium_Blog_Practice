@@ -1,45 +1,42 @@
 import { Appbar } from "../components/Appbar";
 import { Blogcard } from "../components/Blogcard";
+import { BlogSkeleton } from "../components/BlogSkeleton";
+import { useBlogs } from "../hooks";
 
 export const Blogs = () => {
+  const { loading, blogs } = useBlogs();
+
+  if (loading) {
+    return (
+      <div>
+        <Appbar />
+        <div className="flex justify-center">
+          <div>
+            <BlogSkeleton />
+            <BlogSkeleton />
+            <BlogSkeleton />
+            <BlogSkeleton />
+            <BlogSkeleton />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div>
       <Appbar />
-
       <div className="flex justify-center">
-        <div className="max-w-xl">
-          <Blogcard
-            AuthorName={"Leela Krishna"}
-            BlogTitle={
-              "How an ugly single page application makes $5000 a month without affiliate marketing or adsense"
-            }
-            BlogContent={
-              "How an ugly single page application makes $5000 a month without affiliate marketing or adsense How an ugly single page application makes $5000 a month without affiliate marketing or adsense How an ugly single page application makes $5000 a month without affiliate marketing or adsense"
-            }
-            PublishedDate={"Feb 9th 2024"}
-          />
-
-          <Blogcard
-            AuthorName={"Leela Krishna"}
-            BlogTitle={
-              "How an ugly single page application makes $5000 a month without affiliate marketing or adsense"
-            }
-            BlogContent={
-              "How an ugly single page application makes $5000 a month without affiliate marketing or adsense How an ugly single page application makes $5000 a month without affiliate marketing or adsense How an ugly single page application makes $5000 a month without affiliate marketing or adsense"
-            }
-            PublishedDate={"Feb 9th 2024"}
-          />
-
-          <Blogcard
-            AuthorName={"Leela Krishna"}
-            BlogTitle={
-              "How an ugly single page application makes $5000 a month without affiliate marketing or adsense"
-            }
-            BlogContent={
-              "How an ugly single page application makes $5000 a month without affiliate marketing or adsense How an ugly single page application makes $5000 a month without affiliate marketing or adsense How an ugly single page application makes $5000 a month without affiliate marketing or adsense"
-            }
-            PublishedDate={"Feb 9th 2024"}
-          />
+        <div>
+          {blogs.map((blog) => (
+            <Blogcard
+              id={blog.id}
+              AuthorName={blog.author.name || "Anonymous"}
+              BlogTitle={blog.title}
+              BlogContent={blog.content}
+              PublishedDate={"2nd Feb 2024"}
+            />
+          ))}
         </div>
       </div>
     </div>
